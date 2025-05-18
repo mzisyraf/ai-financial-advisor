@@ -35,6 +35,10 @@ def run_once(cfg_path: str | None = None):
             {"month": [], "cash_in": [], "cash_out": [],
              "net_cash": [], "cum_cash": []}
         )
+
+    # keep last 6 months handy for UI / chatbot
+    recent_cf = cashflow_df.tail(6).reset_index(drop=True)
+
     ratios = dp.financial_ratios(monthly_sales, exp_summary, {
         "current_assets": 85000,
         "current_liab":  32000,
@@ -51,8 +55,11 @@ def run_once(cfg_path: str | None = None):
         'products_df': products_df,
         'employees_df': employees_df,
         'cashflow': cashflow_df,
+        'cashflow_recent': recent_cf,        # ← NEW
         'ratios': ratios,
-        'burn_rate_months': (cashflow_df['cum_cash'].iloc[-1] /
-                             -cashflow_df['net_cash'].iloc[-1]
-                             if cashflow_df['net_cash'].iloc[-1] < 0 else 99)
+        'burn_rate_months': (
+            cashflow_df['cum_cash'].iloc[-1] /
+            -cashflow_df['net_cash'].iloc[-1]
+            if cashflow_df['net_cash'].iloc[-1] < 0 else 99
+        )
     }
