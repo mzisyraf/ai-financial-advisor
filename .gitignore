@@ -1,2 +1,9 @@
 config.json
 .env
+ai_insights/__pycache__/
+config/__pycache__/
+chatbot/__pycache__/
+dashboard/__pycache__/
+data_extraction/__pycache__/
+data_processing/__pycache__/
+pipeline/__pycache__/
